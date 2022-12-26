@@ -1,8 +1,6 @@
 name: GCP To Push Artifact Registry
 
-on:
-  push:
-    branches: [main]
+on: workflow_call
 
 jobs:
   build-push-gcr:
