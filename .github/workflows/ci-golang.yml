@@ -1,6 +1,12 @@
 name: Server CI
 
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        description: "The working directory of the caller workflow repository"
+        default: "."
+        type: string
 
 jobs:
   test:
@@ -9,6 +15,11 @@ jobs:
         go-version: [1.19.x]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
+
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
     steps:
       - name: Install Go
         uses: actions/setup-go@v2
