@@ -1,6 +1,12 @@
 name: GCP To Push Container Registry
 
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        description: "The working directory of the caller workflow repository"
+        default: "."
+        type: string
 
 jobs:
   build-push-gcr:
@@ -10,6 +16,11 @@ jobs:
       IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
       GCP_REGION: ${{ secrets.GCP_REGION }}
+
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@master
